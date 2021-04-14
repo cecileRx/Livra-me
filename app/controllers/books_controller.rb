@@ -19,7 +19,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     @book.user = User.first
     if @book.save
-      flash[:notice] = "book was created successfully!"
+      flash[:notice] = "#{@book.title} was created successfully!"
       redirect_to @book
     else
      render 'new'
@@ -28,7 +28,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(book_params)
-      flash[:notice] = "book was edited successfully!"
+      flash[:notice] = "#{@book.title} was edited successfully!"
       redirect_to @book
     else
       render 'edit'

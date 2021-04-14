@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
-
+  before_action :set_user, only: [:show, :edit, :update]
   def show
   end
 
   def index
     @users = User.all
   end
+
 
   def new
     @user = User.new
@@ -20,7 +21,19 @@ class UsersController < ApplicationController
       flash[:alert] = "There is a problem with your account creation"
       render 'new'
     end
+  end
 
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      flash[:notice] = "Your account has been successfully updated"
+      redirect_to books_path
+    else
+      flash[:alert] = "There is a problem with your account update"
+      render 'edit'
+    end
   end
 
  private
