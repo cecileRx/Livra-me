@@ -57,8 +57,8 @@ class BooksController < ApplicationController
   end
 
   def require_same_user
-    unless @book.user == current_user
-      flash[:alert] = "You can only edit or delete your own article"
+    if current_user != @book.user && !current_user.admin?
+      flash[:alert] = "You can only edit or delete your own books"
       redirect_to books_path
     end
 
