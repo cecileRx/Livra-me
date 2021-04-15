@@ -1,7 +1,9 @@
 
   <h2 class="text-center mt-4"><%= @user.username%>'profile</h2>
   <div class="text-center">
-   <%= link_to "Update your profile", edit_user_path(@user), class: "btn btn-outline-info" %>
+    <% if logged_in? && @user == current_user %>
+      <%= link_to "Update your profile", edit_user_path(@user), class: "btn btn-outline-info" %>
+    <% end %>
   </div>
   <h3 class="text-center mt-4">My library</h3>
   <div class="flickr_pagination">

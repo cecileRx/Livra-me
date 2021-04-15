@@ -13,8 +13,10 @@
           <div class="card-body">
             <h5 class="card-title"><%= link_to user.username, user_path(user), class: "text-success" %></h5>
             <%= link_to "View", user_path(user), class: "btn btn-outline-success" %>
-            <%= link_to "Edit", edit_user_path(user), class: "btn btn-outline-info" %>
-            <%= link_to "Delete", user_path(user), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <% if logged_in? && user == current_user %>
+              <%= link_to "Edit", edit_user_path(user), class: "btn btn-outline-info" %>
+              <%= link_to "Delete", user_path(user), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <% end %>
           </div>
           <div class="card-footer text-muted">
             <small>Created <%= time_ago_in_words(user.created_at) %> ago,

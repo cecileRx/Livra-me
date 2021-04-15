@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
-  before_action :current_user, except: [:index]
+  before_action :require_user, only: [:edit, :update]
+  before_action :require_same_user , only: [:edit, :update, :destroy]
 
   def show
     @books = @user.books.paginate(page: params[:page], per_page: 2)
@@ -50,4 +51,10 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :password)
   end
 
+   def require_same_user
+    unless @user == current_user
+      flash[:alert] = "You can only edit or delete your own article"
+      redirect_to users_path
+    end
+  end
 end
