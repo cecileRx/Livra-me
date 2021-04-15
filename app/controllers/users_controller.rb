@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:notice] = "Your account has been successfully updated"
-      redirect_to books_path
+      redirect_to @user
     else
       flash[:alert] = "There is a problem with your account update"
       render 'edit'
