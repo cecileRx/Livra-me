@@ -1,9 +1,10 @@
 class CategoriesController < ApplicationController
+  before_action :set_category, only: [:show, :edit, :update]
   before_action :require_admin, except: [:show, :index ]
 
 
   def show
-    @category = Category.find(params[:id])
+    @books = @category.books.paginate(page: params[:page], per_page: 3)
   end
 
   def index
@@ -24,7 +25,24 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @category.update(category_params)
+      flash[:notice] = "The category was successfully updated"
+      redirect_to @category
+    else
+      render 'edit'
+    end
+
+  end
+
   private
+
+  def set_category
+    @category = Category.find(params[:id])
+  end
 
   def category_params
     params.require(:category).permit(:name)
